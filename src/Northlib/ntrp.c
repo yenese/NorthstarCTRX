@@ -20,11 +20,8 @@
  * <http://www.gnu.org/licenses/>.
  */
 
-
-
 #include "ntrp.h"
 #include <stdint.h>
-
 
 NTRP_Message_t NTRP_NewMessage(void){
 	NTRP_Message_t message;
@@ -35,7 +32,7 @@ NTRP_Message_t NTRP_NewMessage(void){
 	return message;
 }
 
-NTRP_Packet_t  NTRP_NewPacket(void){
+NTRP_Packet_t NTRP_NewPacket(void){
 	NTRP_Packet_t packet;
 	packet.header = 0;
 	packet.dataID = 0;

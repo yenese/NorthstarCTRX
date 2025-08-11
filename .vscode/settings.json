@@ -2,6 +2,7 @@
     "files.associations": {
         "my_usb.h": "c",
         "led.h": "c",
-        "ntrp.h": "c"
+        "ntrp.h": "c",
+        "rf52.h": "c"
     }
 }

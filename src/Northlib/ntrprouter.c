@@ -31,13 +31,13 @@
 #include "my_usb.h"
 
 #include "led.h"
+#include "my_esb.h"
 
 #define SYNC_TIMEOUT     (50)     /* 50 seconds timeout */
 #define USB_LED			 (0)
 #define RADIO_LED 		 (1)
 
-static int8_t ready; /* Syncronisation ? OK : ERROR */
-
+static int8_t       ready; /* Syncronisation ? OK : ERROR */
 static NTRPR_Pipe_t nrfPipe[NRF_MAX_PIPE_SIZE];  /* 5 PIPE. Do not use pipe 0 for multiceiver applications */
 static uint8_t 	 	nrfPipeIndex;
 static int8_t  	 	nrfLastTransmitIndex;      /* Last Transmit Pipe Index */
@@ -45,8 +45,7 @@ static int8_t  	 	nrfLastTransmitIndex;      /* Last Transmit Pipe Index */
 static uint8_t rxBuffer[NTRP_MAX_MSG_SIZE];   /* Master RX buffer */
 static uint8_t txBuffer[NTRP_MAX_MSG_SIZE];   /* Slave Transmit buffer */
 
-static NTRPR_Mode_e mode; /* RxTx , Rx, Tx modes. Default : RxTx */
-
+static NTRPR_Mode_e      mode; /* RxTx , Rx, Tx modes. Default : RxTx */
 static SemaphoreHandle_t radioMutex;
 
 void NTRPR_UsbTask(void* argv);
@@ -72,7 +71,6 @@ void NTRPR_Init(void){
 	if(NTRPR_Sync(SYNC_TIMEOUT) == 0) return;
 
 	radioMutex = xSemaphoreCreateMutex();
-
 	STATIC_MEM_TASK_CREATE(NTRPR_USB, NTRPR_UsbTask, NULL);
 	STATIC_MEM_TASK_CREATE(NTRPR_RADIO, NTRPR_RadioTask, NULL);
 }
@@ -156,7 +154,7 @@ void NTRPR_TransmitMaster(const NTRP_Message_t* msg){
 }
 
 uint8_t NTRPR_ReceivePipe(NTRP_Message_t* msg){
-	/* NRF Receive */
+	/* NRF Receive !!!! */
     if(mode == R_MODE_FULLTX) return 0;
 
     uint8_t pipe = 0;
@@ -209,7 +207,7 @@ uint8_t NTRPR_TransmitPipe(uint8_t pipeid, const NTRP_Packet_t* packet, uint8_t 
     return 0;
 }
 
-void NTRPR_TransmitPipeFast( uint8_t pipeid, const uint8_t* raw_sentence, uint8_t size){
+void NTRPR_TransmitPipeFast(uint8_t pipeid, const uint8_t* raw_sentence, uint8_t size){
     if(mode == R_MODE_FULLRX) return;
 
 	if (xSemaphoreTake(radioMutex, portMAX_DELAY) != pdTRUE) return;
@@ -269,24 +267,11 @@ void NTRPR_RouterCOM(NTRP_Packet_t* cmd, uint8_t size){
         if (NTRPR_OpenPipe(pipe)) NTRPR_Debug("NRF Pipe Opened");
         else NTRPR_Debug("NRF Pipe Error");
     break;
-    case R_TRX:
-    	NTRPR_Debug("NRF TRX");
-        RF24_startListening();
-        mode = R_MODE_TRX; break;
-    case R_FULLRX:
-    	NTRPR_Debug("NRF FULLRX");
-        RF24_startListening();
-        mode = R_MODE_FULLRX; break;
-    case R_FULLTX:
-    	NTRPR_Debug("NRF FULLTX");
-        RF24_stopListening();
-        mode = R_MODE_FULLTX; break;
-    case R_CLOSEPIPE:
-        /* Not Implemented */
-    break;
-    case R_EXIT:
-        /* Not Implemented */
-    break;
+    case R_TRX: break;
+    case R_FULLRX: break;
+    case R_FULLTX: break;
+    case R_CLOSEPIPE: break;
+    case R_EXIT: break;
     default:break;
     }
 }
@@ -294,10 +279,7 @@ void NTRPR_RouterCOM(NTRP_Packet_t* cmd, uint8_t size){
 uint8_t NTRPR_OpenPipe(NTRPR_Pipe_t cmd){
     if(nrfPipeIndex >= NRF_MAX_PIPE_SIZE) return 0; /* Reached Maximum Pipe Number */
 
-    //TODO: nrf->setChannel(cmd.channel);
-    //TODO: nrf->setSpeed(speeds[cmd.speedbyte])
-    RF24_openReadingPipe(nrfPipeIndex, cmd.rxaddress); /*301*/
-    RF24_startListening();
+    my_esb_set_rf_channel(cmd.channel % 100);
 
     nrfPipe[nrfPipeIndex] = cmd;  /* Pipe index is need to be same with nrf rx pipe index*/
     nrfPipeIndex++;               /* Incremented for next openpipe & reptresenting the pipe size */

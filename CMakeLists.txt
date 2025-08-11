@@ -13,4 +13,5 @@ target_sources(app PRIVATE
     src/my_esb.c
     src/led.c
     src/systime.c
+    src/rf52.c
 )
