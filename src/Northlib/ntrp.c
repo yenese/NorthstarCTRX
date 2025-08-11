@@ -20,7 +20,7 @@
  * <http://www.gnu.org/licenses/>.
  */
 
-#include "ntrp.h"
+#include "Northlib/ntrp.h"
 #include <stdint.h>
 
 NTRP_Message_t NTRP_NewMessage(void){

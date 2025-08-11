@@ -23,8 +23,7 @@
 #ifndef NTRPROUTER_H_
 #define NTRPROUTER_H_
 
-#include "ntrp.h"
-
+#include "Northlib/ntrp.h"
 
 typedef enum{
   R_OPENPIPE    = 21,

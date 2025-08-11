@@ -25,8 +25,8 @@
 #include <stdio.h>
 
 #include "systime.h"
-#include "ntrprouter.h"
-#include "ntrp.h"
+#include "Northlib/ntrprouter.h"
+#include "Northlib/ntrp.h"
 #include "my_usb.h"
 #include "rf52.h"
 #include "led.h"
