@@ -42,7 +42,7 @@ static uint8_t      rxBuffer[NTRP_MAX_MSG_SIZE];   /* Master RX buffer */
 static uint8_t      txBuffer[NTRP_MAX_MSG_SIZE];   /* Slave Transmit buffer */
 
 static NTRPR_Mode_e mode; /* RxTx , Rx, Tx modes. Default : RxTx */
-void   NTRPR_UsbTask(void* argv);
+void   NTRPR_UsbTask(void);
 void   NTRPR_RF52Callback(uint8_t* pRxData, uint16_t len);
 
 void NTRPR_Init(void){
@@ -80,7 +80,7 @@ uint8_t NTRPR_Sync(uint32_t timeout){
     return 0;
 }
 
-void NTRPR_UsbTask(void* argv){
+void NTRPR_UsbTask(void){
     NTRP_Message_t msgbuffer = NTRP_NewMessage();
     /* Waits usb port for catch a success ntrp_message */
     if(NTRPR_ReceiveMaster(&msgbuffer)){

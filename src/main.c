@@ -40,7 +40,9 @@ int main(){
     
     NTRPR_Init();
     
-    LOG_INF("EXIT!");
-      
-    return 0;
+    // Should never reach here as NTRPR_Init has infinite loop
+    LOG_ERR("NTRPR_Init returned unexpectedly!");
+    while(1) {
+        k_msleep(1000);
+    }
 }
