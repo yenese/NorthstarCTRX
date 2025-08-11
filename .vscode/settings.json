@@ -1,13 +1,7 @@
 {
     "files.associations": {
-        "*.html": "html",
-        "/templates/**/*.html": "django-html",
-        "/templates/**/*.css": "css",
-        "/requirements{*,}.{txt,in}": "pip-requirements",
-        "*.css": "css",
-        "clock_control.h": "c",
-        "nrf21540.h": "c",
+        "my_usb.h": "c",
         "led.h": "c",
-        "stdint.h": "c"
+        "ntrp.h": "c"
     }
 }

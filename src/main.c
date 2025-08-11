@@ -11,7 +11,6 @@
 #include <zephyr/drivers/clock_control.h>
 #include <zephyr/drivers/clock_control/nrf_clock_control.h>
 #include <zephyr/drivers/uart.h>
-
 #include "led.h"
 
 LOG_MODULE_REGISTER(esb_bridge, LOG_LEVEL_DBG);
@@ -20,9 +19,8 @@ static struct esb_payload rx_payload;
 static nrf21540_dev_t nrf21540_dev;
  
 static volatile bool tx_done_flag = false;
- 
-void esbCallback(const struct esb_evt *event)
-{
+
+void esbCallback(const struct esb_evt *event){
     switch (event->evt_id) {
         case ESB_EVENT_RX_RECEIVED:
 			ledToggle(0);
@@ -34,8 +32,7 @@ void esbCallback(const struct esb_evt *event)
         case ESB_EVENT_TX_FAILED:
             tx_done_flag = true;
             break;
-        default:
-            break;
+        default: break;
     }
 }
  
@@ -126,6 +123,10 @@ int main()
 	esb_start_rx();
 
     LOG_INF("Initialization complete"); 
+
+    while(1){
+        usbPrint("Hello: %d\n", 30);
+    }
  	while (1){
 		uint8_t esbTxBuffer[32];
 		uint16_t len = usbAvailable();

@@ -7,7 +7,6 @@
 #include <string.h>
 #include <stdint.h>
 
-
 LOG_MODULE_REGISTER(nrf21540, LOG_LEVEL_DBG);
 
 #define REG_CONFREG0    0x00

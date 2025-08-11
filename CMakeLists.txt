@@ -12,4 +12,5 @@ target_sources(app PRIVATE
     src/my_usb.c
     src/my_esb.c
     src/led.c
+    src/systime.c
 )

@@ -15,5 +15,6 @@ int16_t  usbReadByte(void);
 int16_t  usbReceive(uint8_t* pRxData, uint16_t len);
 int8_t   usbTransmit(const uint8_t* pTxData, uint16_t len);
 void     usbCallback(const struct device *dev, void *user_data);
+void     usbPrint(char* format, ...);
 
 #endif 

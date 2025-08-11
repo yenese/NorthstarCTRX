@@ -4,3 +4,8 @@
 
 # build
 /build*/
+
+.vscode/*
+/.vscode/*
+
+CLAUDE.md

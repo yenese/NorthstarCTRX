@@ -86,6 +86,26 @@ int8_t usbTransmit(const uint8_t* pTxData, uint16_t len) {
     return 0;
 }
 
+void usbPrint(char* format, ...){
+
+    va_list args;
+    char temp[128] = {0};
+    uint8_t length = 0;
+
+    va_start(args, format);
+    vsprintf(temp,format,args);
+    va_end(args);
+
+    for(uint8_t i = 0; i < 128; i++){
+    	if(temp[i] == 0x00){
+    		length = i;
+    		break;
+    	}
+    }
+
+    usbTransmit((uint8_t*)temp, length);
+}
+
 void usbCallback(const struct device *dev, void *user_data) {
     ARG_UNUSED(user_data);
     
