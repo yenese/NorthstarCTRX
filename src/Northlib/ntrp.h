@@ -46,8 +46,7 @@ typedef enum{
   NTRP_RUN		= 6, /*Func Run  + FuncID */
 }NTRP_Header_e;
 
-typedef union
-{
+typedef union{
 	int8_t     INT8_d;
 	int16_t    INT16_d;
 	int32_t    INT32_d;

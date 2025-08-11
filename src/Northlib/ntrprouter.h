@@ -25,10 +25,6 @@
 
 #include "ntrp.h"
 
-#define NRF_MAX_PIPE_SIZE   6
-
-#define NTRPR_TASK_PRI		(5)
-#define NTRPR_TASK_STACK	(4 * configMINIMAL_STACK_SIZE)
 
 typedef enum{
   R_OPENPIPE    = 21,

@@ -14,8 +14,7 @@ static nrf21540_dev_t nrf21540_dev;
 static volatile bool tx_done_flag = false;
 static rf52RxCallback user_rx_callback = NULL;
 
-void esbCallback(const struct esb_evt *event)
-{
+void esbCallback(const struct esb_evt *event){
     switch (event->evt_id) {
         case ESB_EVENT_RX_RECEIVED:
             while (esb_read_rx_payload(&rx_payload) == 0) {
@@ -99,4 +98,8 @@ int8_t rf52Transmit(uint8_t* pTxBuffer, uint16_t len)
     esb_start_rx();
     
     return 0;
+}
+
+void rf52SetChannel(uint8_t ch){
+    my_esb_set_rf_channel(ch);
 }

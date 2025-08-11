@@ -14,4 +14,6 @@ target_sources(app PRIVATE
     src/led.c
     src/systime.c
     src/rf52.c
+    src/Northlib/ntrp.c
+    src/Northlib/ntrprouter.c
 )
